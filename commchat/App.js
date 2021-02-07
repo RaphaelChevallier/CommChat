@@ -4,17 +4,18 @@ import store from './store';
 import Login from './components/Login';
 import Users from './components/Users';
 import Chat from './components/Chat';
-import { createStackNavigator } from 'react-navigation';
-
+import { createAppContainer } from 'react-navigation'
+import { createStackNavigator } from 'react-navigation-stack';
 export default class App extends React.Component {
   render() {
     return (
       <Provider store={ store }>
-        <RootStack />
+        <Container />
       </Provider>
     );
   }
 }
+
 const RootStack = createStackNavigator({
   Login: {
     screen: Login
@@ -31,3 +32,5 @@ const RootStack = createStackNavigator({
     headerTitle: 'Chat!'
   }
 });
+
+const Container = createAppContainer(RootStack);
