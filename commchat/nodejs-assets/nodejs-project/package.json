@@ -1,0 +1,11 @@
+{
+    "name": "commchat-node",
+    "version": "0.0.1",
+    "description": "node part of the project",
+    "main": "nodeIPFS.js",
+    "author": "Raphael",
+    "license": "",
+    "dependencies": {
+        "ipfs-core": "^0.5.2"
+    }
+}

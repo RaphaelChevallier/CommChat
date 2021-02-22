@@ -57,3 +57,6 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+
+/nodejs-assets/nodejs-project/sample-main.js
+/nodejs-assets/nodejs-project/sample-package.json

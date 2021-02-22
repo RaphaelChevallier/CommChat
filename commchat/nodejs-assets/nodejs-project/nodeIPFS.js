@@ -1,0 +1,1 @@
+var rn_bridge = require('rn-bridge');
