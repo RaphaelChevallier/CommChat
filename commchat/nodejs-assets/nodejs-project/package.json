@@ -6,6 +6,9 @@
     "author": "Raphael",
     "license": "",
     "dependencies": {
+        "dotenv": "^8.2.0",
+        "envfile": "^6.14.0",
+        "fs": "^0.0.1-security",
         "ipfs-core": "^0.5.2"
     }
 }

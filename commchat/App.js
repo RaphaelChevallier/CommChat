@@ -6,6 +6,7 @@ import Users from './components/Users';
 import Chat from './components/Chat';
 import { createAppContainer } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack';
+import nodejs from 'nodejs-mobile-react-native';
 export default class App extends React.Component {
   render() {
     return (
@@ -14,6 +15,12 @@ export default class App extends React.Component {
       </Provider>
     );
   }
+}
+
+componentWillMount()
+{
+  nodejs.start('nodeIPFS.js');
+
 }
 
 const RootStack = createStackNavigator({
