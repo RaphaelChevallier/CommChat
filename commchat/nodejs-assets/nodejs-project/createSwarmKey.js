@@ -6,3 +6,5 @@ generate(swarmKey)
 
 fs.writeFile('.env', 'SWARM_KEY=' + swarmKey, () => {});
 
+module.exports.SWARM_KEY = swarmKey;
+

@@ -8,6 +8,11 @@ import { createAppContainer } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack';
 import nodejs from 'nodejs-mobile-react-native';
 export default class App extends React.Component {
+  constructor(props){
+    super(props)
+    // nodejs.start('nodeFunctions.js');
+  }
+
   render() {
     return (
       <Provider store={ store }>
@@ -15,12 +20,6 @@ export default class App extends React.Component {
       </Provider>
     );
   }
-}
-
-componentWillMount()
-{
-  nodejs.start('nodeIPFS.js');
-
 }
 
 const RootStack = createStackNavigator({
