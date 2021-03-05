@@ -5,28 +5,27 @@ const Bootstrap = require('libp2p-bootstrap')
 const Mdns = require('libp2p-mdns')
 const Protector = require('libp2p/src/pnet')
 const Gossipsub = require('libp2p-gossipsub')
-const swarmKey = require('./createSwarmKey');
 
 // const IPFS = require('ipfs-core')
 const Libp2p = require('libp2p')
-const SWARM_KEY = swarmKey.SWARM_KEY;
 
-const privateLibp2pNode = async () => {
+const privateLibp2pNode = async (swarmKey, peerID) => {
   const node = await Libp2p.create({
     modules: {
       transport: [TCP],
       streamMuxer: [MPLEX],
       connEncryption: [NOISE],
-      peerDiscovery: [Mdns],
-      connProtector: new Protector(SWARM_KEY),
+      peerDiscovery: [],
+      connProtector: new Protector(swarmKey),
       pubsub: Gossipsub
     },
     addresses: {
         listen: [
-          '/ip4/0.0.0.0/tcp/9101',
-          '/ip4/0.0.0.0/tcp/9102/http/p2p-webrtc-direct'
+          '/ip4/0.0.0.0/tcp/57336',
+          '/ip4/0.0.0.0/tcp/57326/http/p2p-webrtc-direct'
         ]
       },
+      peerId: peerID,
       config: {
         peerDiscovery: {
           [Bootstrap.tag]: {

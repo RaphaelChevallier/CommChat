@@ -61,3 +61,4 @@ buck-out/
 /nodejs-assets/nodejs-project/sample-main.js
 /nodejs-assets/nodejs-project/sample-package.json
 /nodejs-assets/nodejs-project/.env
+/nodejs-assets/nodejs-project/peerID.json
