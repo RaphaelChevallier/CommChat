@@ -9,6 +9,12 @@ const Gossipsub = require('libp2p-gossipsub')
 // const IPFS = require('ipfs-core')
 const Libp2p = require('libp2p')
 
+// Known peers addresses
+const bootstrapMultiaddrs = [
+  // '/dns4/ams-1.bootstrap.libp2p.io/tcp/443/wss/p2p/QmSoLer265NRgSp2LA3dPaeykiS1J6DifTC88f5uVQKNAd',
+  // '/dns4/lon-1.bootstrap.libp2p.io/tcp/443/wss/p2p/QmSoLMeWqB7YGVLJN3pNLQpmmEk35v6wYtsMGLzSr5QBU3'
+ ]
+
 const privateLibp2pNode = async (swarmKey, peerID) => {
   const node = await Libp2p.create({
     modules: {
@@ -50,11 +56,5 @@ const privateLibp2pNode = async (swarmKey, peerID) => {
   })
   return node
 }
-
-// Known peers addresses
-const bootstrapMultiaddrs = [
-    // '/dns4/ams-1.bootstrap.libp2p.io/tcp/443/wss/p2p/QmSoLer265NRgSp2LA3dPaeykiS1J6DifTC88f5uVQKNAd',
-    // '/dns4/lon-1.bootstrap.libp2p.io/tcp/443/wss/p2p/QmSoLMeWqB7YGVLJN3pNLQpmmEk35v6wYtsMGLzSr5QBU3'
-   ]
 
   module.exports = privateLibp2pNode

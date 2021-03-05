@@ -1,10 +1,9 @@
 // var rn_bridge = require('rn-bridge');
 const privateLibp2pNode = require('./nodeP2P')
-const swarmKey = require('./createSwarmKey');
 const PeerId = require('peer-id');
 const fs = require('fs');
 require('dotenv').config()
-const SWARM_KEY = swarmKey.SWARM_KEY;
+const SWARM_KEY = new Uint8Array(process.env.SWARM_KEY.split(","))
 
 async function getIDJSON(){
   if (process.env.JSON_ID) {
@@ -18,7 +17,7 @@ async function getIDJSON(){
     const createID = JSON.stringify(id.toJSON(), null, 2);
     var minified = JSON.stringify(JSON.parse(createID));
     var encoding = Buffer.from(minified).toString('base64')
-    fs.writeFile('.env', 'JSON_ID=' + encoding, () => {});
+    fs.appendFile('.env', '\nJSON_ID=' + encoding, () => {});
     return id
   }
 }
