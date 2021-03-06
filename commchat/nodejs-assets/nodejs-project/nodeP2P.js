@@ -1,13 +1,14 @@
 const TCP = require('libp2p-tcp')
+const Libp2p = require('libp2p')
 const MPLEX = require('libp2p-mplex')
 const { NOISE } = require('libp2p-noise')
 const Bootstrap = require('libp2p-bootstrap')
 const Mdns = require('libp2p-mdns')
 const Protector = require('libp2p/src/pnet')
 const Gossipsub = require('libp2p-gossipsub')
-
-// const IPFS = require('ipfs-core')
-const Libp2p = require('libp2p')
+const LevelStore = require('datastore-level')
+const store = new LevelStore('./mydb')
+store.open()
 
 // Known peers addresses
 const bootstrapMultiaddrs = [
@@ -26,33 +27,38 @@ const privateLibp2pNode = async (swarmKey, peerID) => {
       pubsub: Gossipsub
     },
     addresses: {
-        listen: [
-          '/ip4/0.0.0.0/tcp/57336',
-          '/ip4/0.0.0.0/tcp/57326/http/p2p-webrtc-direct'
-        ]
+      listen: [
+        '/ip4/0.0.0.0/tcp/57336',
+        '/ip4/0.0.0.0/tcp/57326/http/p2p-webrtc-direct'
+      ]
       },
-      peerId: peerID,
-      config: {
-        peerDiscovery: {
-          [Bootstrap.tag]: {
-            enabled: true,
-            list: bootstrapMultiaddrs, // provide array of multiaddrs
-            interval: 2000,
-            enabled: true
-          }
-        },
-        pubsub: {                     // The pubsub options (and defaults) can be found in the pubsub router documentation
-            enabled: true,
-            emitSelf: false
-        },
-        relay: {                   // Circuit Relay options (this config is part of libp2p core configurations)
-            enabled: true,           // Allows you to dial and accept relayed connections. Does not make you a relay.
-            autoRelay: {
-                enabled: true,         // Allows you to bind to relays with HOP enabled for improving node dialability
-                maxListeners: 2         // Configure maximum number of HOP relays to use
-            }
+    datastore: store,
+    peerStore: {
+      persistence: true,
+      threshold: 5
+    },
+    peerId: peerID,
+    config: {
+      peerDiscovery: {
+        [Bootstrap.tag]: {
+          enabled: true,
+          list: bootstrapMultiaddrs, // provide array of multiaddrs
+          interval: 2000,
+          enabled: true
         }
+      },
+      pubsub: {                     // The pubsub options (and defaults) can be found in the pubsub router documentation
+          enabled: true,
+          emitSelf: false
+      },
+      relay: {                   // Circuit Relay options (this config is part of libp2p core configurations)
+          enabled: true,           // Allows you to dial and accept relayed connections. Does not make you a relay.
+          autoRelay: {
+              enabled: true,         // Allows you to bind to relays with HOP enabled for improving node dialability
+              maxListeners: 2         // Configure maximum number of HOP relays to use
+          }
       }
+    }
   })
   return node
 }

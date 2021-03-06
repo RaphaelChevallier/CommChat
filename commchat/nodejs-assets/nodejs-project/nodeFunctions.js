@@ -2,8 +2,14 @@
 const privateLibp2pNode = require('./nodeP2P')
 const PeerId = require('peer-id');
 const fs = require('fs');
+const LevelStore = require('datastore-level')
+const store = new LevelStore('./mydb')
 require('dotenv').config()
 const SWARM_KEY = new Uint8Array(process.env.SWARM_KEY.split(","))
+
+function startPeerDB(){
+  store._initDb() //this is to start a new db maybe place in own function
+}
 
 async function getIDJSON(){
   if (process.env.JSON_ID) {
@@ -33,8 +39,9 @@ async function getIDJSON(){
     console.log(`nodes started... ${node.peerId.toB58String()}`)
     console.log('nodes started...' + node.multiaddrs.toString())
     console.log("dialing")
-    // const dialed = await node.dial(node2.peerId)
-    // console.log("Dialed: " + dialed)
+    // node.peerStore.addressBook.set(node2.peerId, node2.multiaddrs)
+    const dialed = await node.dial('/ip4/192.168.1.81/tcp/57336/p2p/QmPHJVgwkH4ApF2pPQ4UDCUEzhfM4oJ9hqncmDaawU9coq')
+    console.log("Dialed: " + dialed)
     // rn_bridge.channel.send('Node was initialized.');
   
   })()
