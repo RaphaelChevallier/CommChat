@@ -43,8 +43,8 @@ async function getIDJSON(){
     console.log('nodes started...' + node.multiaddrs)
     console.log('node peerID: ' + node.peerId)
     console.log("dialing")
-    const dialed = await node.dial('/ip4/192.168.1.70/tcp/57336/p2p/QmPHJVgwkH4ApF2pPQ4UDCUEzhfM4oJ9hqncmDaawU9coq')
-    console.log("Dialed: " + dialed)
+    // const dialed = await node.dial('/ip4/192.168.1.70/tcp/57336/p2p/QmPHJVgwkH4ApF2pPQ4UDCUEzhfM4oJ9hqncmDaawU9coq')
+    // console.log("Dialed: " + dialed)
     // addPeerDB(node,'QmPHJVgwkH4ApF2pPQ4UDCUEzhfM4oJ9hqncmDaawU9coq', '/ip4/127.0.0.1/tcp/57336,/ip4/100.244.186.88/tcp/57336,/ip4/192.168.1.70/tcp/57336')
     // rn_bridge.channel.send('Node was initialized.');
   
