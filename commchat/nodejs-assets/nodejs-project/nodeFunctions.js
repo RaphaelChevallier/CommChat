@@ -8,7 +8,7 @@ require('dotenv').config()
 const SWARM_KEY = new Uint8Array(process.env.SWARM_KEY.split(","))
 
 function startPeerDB(){
-  store._initDb() //this is to start a new db maybe place in own function
+  store.open() //this is to start a new db maybe place in own function
 }
 
 async function getIDJSON(){
@@ -40,8 +40,8 @@ async function getIDJSON(){
     console.log('nodes started...' + node.multiaddrs.toString())
     console.log("dialing")
     // node.peerStore.addressBook.set(node2.peerId, node2.multiaddrs)
-    const dialed = await node.dial('/ip4/192.168.1.81/tcp/57336/p2p/QmPHJVgwkH4ApF2pPQ4UDCUEzhfM4oJ9hqncmDaawU9coq')
-    console.log("Dialed: " + dialed)
+    // const dialed = await node.dial('/ip4/192.168.1.81/tcp/57336/p2p/QmPHJVgwkH4ApF2pPQ4UDCUEzhfM4oJ9hqncmDaawU9coq')
+    // console.log("Dialed: " + dialed)
     // rn_bridge.channel.send('Node was initialized.');
   
   })()

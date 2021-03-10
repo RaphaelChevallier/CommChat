@@ -8,7 +8,6 @@ const Protector = require('libp2p/src/pnet')
 const Gossipsub = require('libp2p-gossipsub')
 const LevelStore = require('datastore-level')
 const store = new LevelStore('./mydb')
-store.open()
 
 // Known peers addresses
 const bootstrapMultiaddrs = [
