@@ -1,4 +1,4 @@
-var rn_bridge = require('rn-bridge');
+// var rn_bridge = require('rn-bridge');
 const privateLibp2pNode = require('./nodeP2P')
 const PeerId = require('peer-id');
 const fs = require('fs');
