@@ -8,6 +8,7 @@ const Protector = require('libp2p/src/pnet')
 const Gossipsub = require('libp2p-gossipsub')
 const LevelStore = require('datastore-level')
 const store = new LevelStore('./mydb')
+store.open()
 
 // Known peers addresses
 const bootstrapMultiaddrs = [
@@ -62,4 +63,4 @@ const privateLibp2pNode = async (swarmKey, peerID) => {
   return node
 }
 
-  module.exports = privateLibp2pNode
+module.exports = privateLibp2pNode
