@@ -7,8 +7,7 @@ const Mdns = require('libp2p-mdns')
 const Protector = require('libp2p/src/pnet')
 const Gossipsub = require('libp2p-gossipsub')
 const LevelStore = require('datastore-level')
-const store = new LevelStore('./mydb')
-store.open()
+// const store = new LevelStore('./mydb')
 
 // Known peers addresses
 const bootstrapMultiaddrs = [
@@ -32,10 +31,10 @@ const privateLibp2pNode = async (swarmKey, peerID) => {
         '/ip4/0.0.0.0/tcp/57326/http/p2p-webrtc-direct'
       ]
       },
-    datastore: store,
+    datastore: new LevelStore('./mydb'),
     peerStore: {
       persistence: true,
-      threshold: 5
+      threshold: 1
     },
     peerId: peerID,
     config: {
