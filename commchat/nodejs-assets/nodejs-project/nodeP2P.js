@@ -9,7 +9,6 @@ const Gossipsub = require('libp2p-gossipsub')
 const LevelStore = require('datastore-level')
 require('dotenv').config()
 const bootstrapMultiaddrs = process.env.BOOTSTRAP.split(",")|| []
-console.log(bootstrapMultiaddrs)
 
 const privateLibp2pNode = async (swarmKey, peerID) => {
   const node = await Libp2p.create({
