@@ -7,13 +7,9 @@ const Mdns = require('libp2p-mdns')
 const Protector = require('libp2p/src/pnet')
 const Gossipsub = require('libp2p-gossipsub')
 const LevelStore = require('datastore-level')
-// const store = new LevelStore('./mydb')
-
-// Known peers addresses
-const bootstrapMultiaddrs = [
-  // '/dns4/ams-1.bootstrap.libp2p.io/tcp/443/wss/p2p/QmSoLer265NRgSp2LA3dPaeykiS1J6DifTC88f5uVQKNAd',
-  // '/dns4/lon-1.bootstrap.libp2p.io/tcp/443/wss/p2p/QmSoLMeWqB7YGVLJN3pNLQpmmEk35v6wYtsMGLzSr5QBU3'
- ]
+require('dotenv').config()
+const bootstrapMultiaddrs = process.env.BOOTSTRAP.split(",")|| []
+console.log(bootstrapMultiaddrs)
 
 const privateLibp2pNode = async (swarmKey, peerID) => {
   const node = await Libp2p.create({
@@ -21,7 +17,7 @@ const privateLibp2pNode = async (swarmKey, peerID) => {
       transport: [TCP],
       streamMuxer: [MPLEX],
       connEncryption: [NOISE],
-      peerDiscovery: [],
+      peerDiscovery: [Bootstrap],
       connProtector: new Protector(swarmKey),
       pubsub: Gossipsub
     },

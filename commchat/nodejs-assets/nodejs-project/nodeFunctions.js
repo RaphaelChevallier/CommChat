@@ -6,12 +6,9 @@ const fs = require('fs');
 require('dotenv').config()
 const SWARM_KEY = new Uint8Array(process.env.SWARM_KEY.split(","))
 
-function addPeerDB(node, addedNodePeerID, addedNodeMultiAddrs){
-  //this is to start a new db maybe place in own function
+function addPeerDB(node, addedNodePeerID, addedNodeMultiAddrs, stringPeerId){
   const added = node.peerStore.addressBook.set(addedNodePeerID, addedNodeMultiAddrs)
-  // node.datastore.put(addedNodePeerID, addedNodeMultiAddrs)
-  // node.datastore.has(addedNodePeerID)
-  console.log(added)
+  fs.appendFile('.env', "," + addedNodeMultiAddrs[2].toString() + "/p2p/" + stringPeerId, () => {});
 }
 
 async function getIDJSON(){
@@ -27,6 +24,7 @@ async function getIDJSON(){
     var minified = JSON.stringify(JSON.parse(createID));
     var encoding = Buffer.from(minified).toString('base64')
     fs.appendFile('.env', '\nJSON_ID=' + encoding, () => {});
+    fs.appendFile('.env', '\nBOOTSTRAP=', () => {});
     return id
   }
 }
@@ -46,9 +44,12 @@ async function getIDJSON(){
     console.log("dialing")
     const dialed = await node.dial(PeerId.createFromB58String('QmPHJVgwkH4ApF2pPQ4UDCUEzhfM4oJ9hqncmDaawU9coq'))
     console.log("Dialed: " + dialed)
+    //What you need to transport and show via QR code to add people
     var arrayOf = [multiaddr('/ip4/127.0.0.1/tcp/57336'),multiaddr('/ip4/100.244.186.88/tcp/57336'),multiaddr('/ip4/192.168.1.70/tcp/57336')]
-    var peerIDPhone = PeerId.createFromB58String('bafzbeiaoaalj5bktm6n5z7ilnpaqdefa3ajtr5dmelw3lsk3z2zqmtey7a')
-    // addPeerDB(node, peerIDPhone, arrayOf)
+    var stringPeerId = 'QmPHJVgwkH4ApF2pPQ4UDCUEzhfM4oJ9hqncmDaawU9coq'
+    var peerIDPhone = PeerId.createFromB58String(stringPeerId)
+    // addPeerDB(node, peerIDPhone, arrayOf, stringPeerId)
+    
     node.datastore.close()
     node.stop()
 
