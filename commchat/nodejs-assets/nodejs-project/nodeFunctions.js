@@ -35,29 +35,26 @@ async function getIDJSON(){
     const node = await privateLibp2pNode(SWARM_KEY, id)
     node.datastore.open()
 
+    if (!node.isStarted()){
     await Promise.all([
-      node.start()
+      node.start(),
+    // Handle messages for the protocol
+    node.handle('/chat/1.0.0', async ({ stream }) => {
+      // Send stdin to the stream
+      stdinToStream(stream)
+      // Read the stream and output to console
+      streamToConsole(stream)
+    })
     ])
+  }
 
-  // Handle messages for the protocol
-  await node.handle('/chat/1.0.0', async ({ stream }) => {
-    // Send stdin to the stream
-    stdinToStream(stream)
-    // Read the stream and output to console
-    streamToConsole(stream)
-  })
-  
-    console.log(`nodes started... ${node.peerId.toB58String()}`)
-    console.log('node multiaddr' + node.multiaddrs)
-    console.log('node peerID: ' + node.peerId)
-    console.log("dialing")
-    const dialed = await node.dialProtocol(PeerId.createFromB58String('QmPHJVgwkH4ApF2pPQ4UDCUEzhfM4oJ9hqncmDaawU9coq'), '/chat/1.0.0')
+    const { stream }= await node.dialProtocol(PeerId.createFromB58String('QmPHJVgwkH4ApF2pPQ4UDCUEzhfM4oJ9hqncmDaawU9coq'), '/chat/1.0.0')
+
     //What you need to transport and show via QR code to add people
     var arrayOf = [multiaddr('/ip4/127.0.0.1/tcp/57336'),multiaddr('/ip4/100.244.186.88/tcp/57336'),multiaddr('/ip4/192.168.1.70/tcp/57336')]
     var stringPeerId = 'QmPHJVgwkH4ApF2pPQ4UDCUEzhfM4oJ9hqncmDaawU9coq'
     var peerIDPhone = PeerId.createFromB58String(stringPeerId)
     // addPeerDB(node, peerIDPhone, arrayOf, stringPeerId)
-
     node.datastore.close()
     // node.stop()
 
