@@ -48,7 +48,11 @@ async function getIDJSON(){
     ])
   }
 
-    const { stream }= await node.dialProtocol(PeerId.createFromB58String('QmPHJVgwkH4ApF2pPQ4UDCUEzhfM4oJ9hqncmDaawU9coq'), '/chat/1.0.0')
+    // const { stream }= await node.dialProtocol(PeerId.createFromB58String('QmPHJVgwkH4ApF2pPQ4UDCUEzhfM4oJ9hqncmDaawU9coq'), '/chat/1.0.0')
+    // // Send stdin to the stream
+    // stdinToStream(stream)
+    // // Read the stream and output to console
+    // streamToConsole(stream)
 
     //What you need to transport and show via QR code to add people
     var arrayOf = [multiaddr('/ip4/127.0.0.1/tcp/57336'),multiaddr('/ip4/100.244.186.88/tcp/57336'),multiaddr('/ip4/192.168.1.70/tcp/57336')]

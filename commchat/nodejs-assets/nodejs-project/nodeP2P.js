@@ -3,9 +3,11 @@ const Libp2p = require('libp2p')
 const MPLEX = require('libp2p-mplex')
 const { NOISE } = require('libp2p-noise')
 const Bootstrap = require('libp2p-bootstrap')
-const Mdns = require('libp2p-mdns')
 const Protector = require('libp2p/src/pnet')
+const MDNS = require('libp2p-mdns')
+const KadDht = require('libp2p-kad-dht')
 const Gossipsub = require('libp2p-gossipsub')
+const WebRTCDirect = require('libp2p-webrtc-direct')
 const LevelStore = require('datastore-level')
 require('dotenv').config()
 const bootstrapMultiaddrs = process.env.BOOTSTRAP.split(",")|| []
@@ -13,10 +15,11 @@ const bootstrapMultiaddrs = process.env.BOOTSTRAP.split(",")|| []
 const privateLibp2pNode = async (swarmKey, peerID) => {
   const node = await Libp2p.create({
     modules: {
-      transport: [TCP],
+      transport: [TCP, WebRTCDirect],
       streamMuxer: [MPLEX],
       connEncryption: [NOISE],
-      peerDiscovery: [Bootstrap],
+      peerDiscovery: [Bootstrap, MDNS],
+      dht: KadDht,
       connProtector: new Protector(swarmKey),
       pubsub: Gossipsub
     },

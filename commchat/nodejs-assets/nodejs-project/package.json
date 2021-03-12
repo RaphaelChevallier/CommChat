@@ -10,6 +10,7 @@
         "fs": "^0.0.1-security",
         "ipfs-core": "^0.5.2",
         "libp2p": "^0.30.8",
+        "libp2p-webrtc-direct": "^0.5.1",
         "qrcode": "^1.4.4"
     }
 }
