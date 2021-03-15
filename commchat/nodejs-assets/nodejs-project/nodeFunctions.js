@@ -53,7 +53,7 @@ async function getIDJSON(){
     // stdinToStream(stream)
     // // Read the stream and output to console
     // streamToConsole(stream)
-
+    console.log(node.multiaddrs)
     //What you need to transport and show via QR code to add people
     var arrayOf = [multiaddr('/ip4/127.0.0.1/tcp/57336'),multiaddr('/ip4/100.244.186.88/tcp/57336'),multiaddr('/ip4/192.168.1.70/tcp/57336')]
     var stringPeerId = 'QmPHJVgwkH4ApF2pPQ4UDCUEzhfM4oJ9hqncmDaawU9coq'
