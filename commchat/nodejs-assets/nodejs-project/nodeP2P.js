@@ -35,6 +35,12 @@ const privateLibp2pNode = async (swarmKey, peerID) => {
       threshold: 1
     },
     peerId: peerID,
+    connectionManager: {
+      maxConnections: 300,
+      minConnections: 0,
+      pollInterval: 2000,
+      defaultPeerValue: 1,
+    },
     config: {
       peerDiscovery: {
         [Bootstrap.tag]: {
@@ -49,10 +55,14 @@ const privateLibp2pNode = async (swarmKey, peerID) => {
           emitSelf: false
       },
       relay: {                   // Circuit Relay options (this config is part of libp2p core configurations)
-          enabled: true,           // Allows you to dial and accept relayed connections. Does not make you a relay.
+          enabled: true,
+          hop: {
+            enabled: true,         // Allows you to be a relay for other peers
+            active: true           // You will attempt to dial destination peers if you are not connected to them
+          },           // Allows you to dial and accept relayed connections. Does not make you a relay.
           autoRelay: {
               enabled: true,         // Allows you to bind to relays with HOP enabled for improving node dialability
-              maxListeners: 2         // Configure maximum number of HOP relays to use
+              maxListeners: 3         // Configure maximum number of HOP relays to use
           }
       }
     }
