@@ -3,7 +3,9 @@ const privateLibp2pNode = require('./nodeP2P')
 const PeerId = require('peer-id');
 const multiaddr = require('multiaddr')
 const fs = require('fs');
-const { stdinToStream, streamToConsole } = require('./stream')
+// const { stdinToStream, streamToConsole } = require('./stream')
+const { dial }= require('./dialerFunctions')
+const { listen } = require('./listenerFunctions')
 require('dotenv').config()
 const SWARM_KEY = new Uint8Array(process.env.SWARM_KEY.split(","))
 
@@ -37,22 +39,24 @@ async function getIDJSON(){
 
     if (!node.isStarted()){
     await Promise.all([
-      node.start(),
+      await node.start(),
+      listen(node),
+      dial(node)
     // Handle messages for the protocol
-    node.handle('/chat/1.0.0', async ({ stream }) => {
-      // Send stdin to the stream
-      stdinToStream(stream)
-      // Read the stream and output to console
-      streamToConsole(stream)
-    })
+    // node.handle('/chat/1.0.0', async ({ stream }) => {
+    //   // Send stdin to the stream
+    //   stdinToStream(stream)
+    //   // Read the stream and output to console
+    //   streamToConsole(stream)
+    // })
     ])
   }
 
-    const { stream }= await node.dialProtocol(PeerId.createFromB58String('QmPHJVgwkH4ApF2pPQ4UDCUEzhfM4oJ9hqncmDaawU9coq'), '/chat/1.0.0')
-    // Send stdin to the stream
-    stdinToStream(stream)
-    // Read the stream and output to console
-    streamToConsole(stream)
+    // const { stream }= await node.dialProtocol(PeerId.createFromB58String('QmPHJVgwkH4ApF2pPQ4UDCUEzhfM4oJ9hqncmDaawU9coq'), '/chat/1.0.0')
+    // // Send stdin to the stream
+    // stdinToStream(stream)
+    // // Read the stream and output to console
+    // streamToConsole(stream)
     console.log(node.multiaddrs)
     //What you need to transport and show via QR code to add people
     var arrayOf = [multiaddr('/ip4/127.0.0.1/tcp/57336'),multiaddr('/ip4/162.162.93.25/tcp/57336'),multiaddr('/ip4/10.0.0.162/tcp/57336')]
