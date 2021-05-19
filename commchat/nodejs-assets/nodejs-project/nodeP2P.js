@@ -20,6 +20,8 @@ const privateLibp2pNode = async (swarmKey, peerID) => {
       connEncryption: [NOISE],
       peerDiscovery: [Bootstrap, MDNS],
       dht: KadDht,
+      peerRouting: KadDht,
+      contentRouting: KadDht,
       connProtector: new Protector(swarmKey),
       pubsub: Gossipsub
     },
@@ -41,8 +43,20 @@ const privateLibp2pNode = async (swarmKey, peerID) => {
       pollInterval: 2000,
       defaultPeerValue: 1,
     },
+    peerRouting: {
+      refreshManager: {
+        enabled: true,
+        interval: 1.5e6,
+        bootDelay: 10e3,
+      }
+    },
     config: {
       peerDiscovery: {
+        autoDial: true,
+        [MDNS.tag]: {
+          interval: 10000,
+          enabled: true
+        },
         [Bootstrap.tag]: {
           enabled: true,
           list: bootstrapMultiaddrs, // provide array of multiaddrs
@@ -64,7 +78,7 @@ const privateLibp2pNode = async (swarmKey, peerID) => {
               enabled: true,         // Allows you to bind to relays with HOP enabled for improving node dialability
               maxListeners: 3         // Configure maximum number of HOP relays to use
           }
-      }
+      },
     }
   })
   return node
