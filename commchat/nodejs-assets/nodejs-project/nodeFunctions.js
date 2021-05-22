@@ -59,9 +59,9 @@ async function getIDJSON(){
     // streamToConsole(stream)
     console.log(node.multiaddrs)
     //What you need to transport and show via QR code to add people
-    var arrayOf = [multiaddr('/ip4/127.0.0.1/tcp/57336'),multiaddr('/ip4/162.162.93.25/tcp/57336'),multiaddr('/ip4/10.0.0.162/tcp/57336')]
-    var stringPeerId = 'QmPHJVgwkH4ApF2pPQ4UDCUEzhfM4oJ9hqncmDaawU9coq'
-    var peerIDPhone = PeerId.createFromB58String(stringPeerId)
+    // var arrayOf = [multiaddr('/ip4/127.0.0.1/tcp/57336'),multiaddr('/ip4/162.162.93.25/tcp/57336'),multiaddr('/ip4/10.0.0.162/tcp/57336')]
+    // var stringPeerId = 'QmPHJVgwkH4ApF2pPQ4UDCUEzhfM4oJ9hqncmDaawU9coq'
+    // var peerIDPhone = PeerId.createFromB58String(stringPeerId)
     // addPeerDB(node, peerIDPhone, arrayOf, stringPeerId)
     node.datastore.close()
     // node.stop()
