@@ -8,7 +8,6 @@
     "dependencies": {
         "dotenv": "^8.6.0",
         "fs": "^0.0.1-security",
-        "ipfs-core": "^0.5.4",
         "libp2p": "^0.30.12",
         "libp2p-webrtc-direct": "^0.5.1",
         "qrcode": "^1.4.4"
