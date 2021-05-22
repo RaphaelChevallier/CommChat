@@ -11,7 +11,7 @@ async function dial(node, protocol) {
 //   const listenerMa = multiaddr(`/ip4/127.0.0.1/tcp/10333/p2p/${idListener.toB58String()}`)
 //   const { stream } = await nodeDialer.dialProtocol(listenerMa, '/chat/1.0.0')
 
-  console.log('Dialer dialed to listener on protocol: /chat/laptop')
+  console.log('Dialer dialed to listener on protocol: /chat/phone')
   console.log('Type a message and see what happens')
 
   // Send stdin to the stream
