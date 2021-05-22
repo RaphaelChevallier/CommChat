@@ -1,4 +1,5 @@
 const { stdinToStream, streamToConsole } = require('./stream')
+const { handleChat } = require('./chatHandles')
 const PeerId = require('peer-id')
 
 async function listen(node) {

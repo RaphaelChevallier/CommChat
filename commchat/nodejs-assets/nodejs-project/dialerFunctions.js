@@ -18,6 +18,10 @@ async function dial(node) {
   stdinToStream(stream)
   // Read the stream and output to console
   streamToConsole(stream)
+  node.connectionManager.on('peer:connect', (connection) => {
+    console.log('connected to: ', connection.remotePeer.toB58String())
+    console.log(connection.streams)
+  })
 }
 
 module.exports = {
