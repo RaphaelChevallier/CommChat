@@ -41,7 +41,7 @@ async function getIDJSON(){
     await Promise.all([
       await node.start(),
       listen(node),
-      // dial(node)
+      dial(node)
     // Handle messages for the protocol
     // node.handle('/chat/1.0.0', async ({ stream }) => {
     //   // Send stdin to the stream
