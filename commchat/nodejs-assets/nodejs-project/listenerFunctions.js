@@ -5,11 +5,12 @@ async function listen(node) {
   // Log a message when a remote peer connects to us
   node.connectionManager.on('peer:connect', (connection) => {
     console.log('connected to: ', connection.remotePeer.toB58String())
+    console.log(connection.streams)
   })
 
   node.connectionManager.on('peer:disconnect', (connection) => {
-    connection.close()
     console.log('disconnected peer: ', connection.remotePeer.toB58String())
+    console.log(connection.streams)
   })
 
 
