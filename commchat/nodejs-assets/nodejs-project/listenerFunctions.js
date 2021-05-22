@@ -7,6 +7,12 @@ async function listen(node) {
     console.log('connected to: ', connection.remotePeer.toB58String())
   })
 
+  node.connectionManager.on('peer:disconnect', (connection) => {
+    await node.hangUp(connection.remotePeer.toB58String())
+    console.log('disconnected peer')
+  })
+
+
   // Handle messages for the protocol
   await node.handle('/chat/1.0.0', async ({ stream }) => {
     // Send stdin to the stream
