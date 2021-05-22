@@ -8,7 +8,7 @@ async function listen(node) {
   })
 
   node.connectionManager.on('peer:disconnect', (connection) => {
-    node.hangUp(connection.remotePeer.toB58String())
+    node.hangUp(connection.remotePeer)
     console.log('disconnected peer')
   })
 
