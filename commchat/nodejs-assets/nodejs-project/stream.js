@@ -1,4 +1,3 @@
-//Taken straight from chat examples of js-libp2p github
 'use strict'
 /* eslint-disable no-console */
 

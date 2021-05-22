@@ -9,8 +9,14 @@ async function listen(node) {
   })
 
   node.connectionManager.on('peer:disconnect', (connection) => {
+<<<<<<< HEAD
     console.log('disconnected peer: ', connection.remotePeer.toB58String())
     connection.tags
+=======
+    node.hangUp(connection.remotePeer)
+    handleChat()
+    console.log('disconnected peer')
+>>>>>>> main
   })
 
   async function handleChat () {
@@ -23,6 +29,19 @@ async function listen(node) {
     })
   }
 
+<<<<<<< HEAD
+=======
+  async function handleChat () {
+    // Handle messages for the protocol
+    await node.handle('/chat/1.0.0', async ({ stream }) => {
+      // Send stdin to the stream
+      stdinToStream(stream)
+      // Read the stream and output to console
+      streamToConsole(stream)
+    })
+  }
+
+>>>>>>> main
   handleChat()
 
   // Output listen addresses to the console
