@@ -8,7 +8,7 @@ async function listen(node) {
   })
 
   node.connectionManager.on('peer:disconnect', (connection) => {
-    node.hangUp(connection.PeerId)
+    node.hangUp(connection.remotePeer)
     handleChat()
     console.log('disconnected peer')
   })
