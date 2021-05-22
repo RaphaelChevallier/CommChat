@@ -4,6 +4,7 @@ const PeerId = require('peer-id')
 async function listen(node) {
   // Log a message when a remote peer connects to us
   node.connectionManager.on('peer:connect', (connection) => {
+    handleChat()
     console.log('connected to: ', connection.remotePeer.toB58String())
     console.log(connection.streams)
   })
