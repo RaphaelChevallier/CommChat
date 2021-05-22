@@ -10,8 +10,7 @@ async function listen(node) {
 
   node.connectionManager.on('peer:disconnect', (connection) => {
     console.log('disconnected peer: ', connection.remotePeer.toB58String())
-    connection.close()
-    console.log(connection)
+    connection.tags
   })
 
   async function handleChat () {
