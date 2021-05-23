@@ -3,6 +3,8 @@ const { handleChat } = require('./handleChats')
 const { dial } = require('./dialerFunctions')
 
 async function listen(node) {
+
+  handleChat(node)
   // Log a message when a remote peer connects to us
   node.connectionManager.on('peer:connect', (connection) => {
     handleChat(node)
