@@ -21,7 +21,6 @@ async function listen(node) {
   })
 
   node.connectionManager.on('peer:disconnect', (connection) => {
-    node.unhandle('/chat/laptop')
     handleChat(node)
     console.log('disconnected peer')
   })
