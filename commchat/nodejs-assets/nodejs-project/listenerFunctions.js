@@ -15,7 +15,7 @@ async function handleChat(node) {
 async function listen(node) {
   // Log a message when a remote peer connects to us
   node.connectionManager.on('peer:connect', (connection) => {
-    await handleChat(node)
+    handleChat(node)
     // dial(node, '/chat/phone') //make it bidirectional
     console.log('connected to: ', connection.remotePeer.toB58String())
   })
