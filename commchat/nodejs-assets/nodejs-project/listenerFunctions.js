@@ -20,7 +20,7 @@ async function listen(node) {
   })
 
   node.connectionManager.on('peer:disconnect', (connection) => {
-    await node.unhandle('/chat/phone')
+    node.unhandle('/chat/phone')
     console.log('disconnected peer')
   })
 
