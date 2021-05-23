@@ -14,10 +14,10 @@ async function dial(node, protocol) {
   console.log('Dialer dialed to listener on protocol: /chat/phone')
   console.log('Type a message and see what happens')
 
-  // // Send stdin to the stream
-  // stdinToStream(stream)
-  // // Read the stream and output to console
-  // streamToConsole(stream)
+  // Send stdin to the stream
+  stdinToStream(stream)
+  // Read the stream and output to console
+  streamToConsole(stream)
 }
 
 module.exports = {
