@@ -24,6 +24,8 @@ async function listen(node) {
     console.log('disconnected peer')
   })
 
+  handleChat(node)
+
 
   // Output listen addresses to the console
   console.log('Listener ready, listening on:')
