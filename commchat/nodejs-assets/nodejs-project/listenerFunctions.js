@@ -1,7 +1,6 @@
 const { stdinToStream, streamToConsole } = require('./stream')
 const { handleChat } = require('./handleChat')
 const { dial } = require('./dialerFunctions')
-const PeerId = require('peer-id')
 
 async function listen(node) {
   // Log a message when a remote peer connects to us

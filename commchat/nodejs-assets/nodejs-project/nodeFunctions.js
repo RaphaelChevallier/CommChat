@@ -42,7 +42,7 @@ async function getIDJSON(){
       await node.start(),
       listen(node),
       // dial(node, '/chat/phone')
-      dial(node, '/node/linux')
+      dial(node, '/chat/linux')
     // Handle messages for the protocol
     // node.handle('/chat/1.0.0', async ({ stream }) => {
     //   // Send stdin to the stream
