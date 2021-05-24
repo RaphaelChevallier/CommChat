@@ -24,19 +24,6 @@ async function listen(node) {
     console.log('disconnected peer')
   })
 
-  handleChat(node)
-
-  async function handleChat(node) {
-    // Handle messages for the protocol
-    await node.handle('/chat/phone', async ({ stream }) => {
-      // Send stdin to the stream
-      stdinToStream(stream)
-      // Read the stream and output to console
-      streamToConsole(stream)
-    })
-  }
-
-
   // Output listen addresses to the console
   console.log('Listener ready, listening on:')
   node.multiaddrs.forEach((ma) => {
