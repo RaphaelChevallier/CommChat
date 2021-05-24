@@ -1,6 +1,5 @@
 const { stdinToStream, streamToConsole } = require('./stream')
 const { dial } = require('./dialerFunctions')
-const PeerId = require('peer-id')
 
 async function handleChat(node) {
   // Handle messages for the protocol
@@ -16,13 +15,14 @@ async function listen(node) {
   // Log a message when a remote peer connects to us
   node.connectionManager.on('peer:connect', (connection) => {
     handleChat(node)
-    // dial(node, '/chat/phone') //make it bidirectional
+    // dial(node, '/chat/laptop') //make it bidirectional
     console.log('connected to: ', connection.remotePeer.toB58String())
   })
 
   node.connectionManager.on('peer:disconnect', (connection) => {
     console.log('disconnected peer')
   })
+
 
   // Output listen addresses to the console
   console.log('Listener ready, listening on:')
