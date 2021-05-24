@@ -5,7 +5,7 @@ const { dial } = require('./dialerFunctions')
 async function listen(node) {
   // Log a message when a remote peer connects to us
   node.connectionManager.on('peer:connect', (connection) => {
-    handleChat(node)
+    // handleChat(node) // read from stream
     // dial(node, '/chat/phone') //make it bidirectional
     console.log('connected to: ', connection.remotePeer.toB58String())
   })
@@ -13,6 +13,8 @@ async function listen(node) {
   node.connectionManager.on('peer:disconnect', (connection) => {
     console.log('disconnected peer')
   })
+
+  handleChat(node)
 
 
   // Output listen addresses to the console
