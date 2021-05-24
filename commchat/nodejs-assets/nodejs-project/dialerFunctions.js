@@ -7,7 +7,7 @@ async function dial(node, protocol) {
   console.log('Dialer ready')
 
   // Dial to the remote peer (the "listener")
-  const { stream }= await node.dialProtocol(PeerId.createFromB58String('QmQ1Z9vpKZLwvDhshC8vhAroqSw2EdNwpMnvy9FY8KpTPw'), protocol)
+  const { stream }= await node.dialProtocol(PeerId.createFromB58String('QmPnYBkqiW3RQ8wVJEc4ek4hCYjC85ezcS4BsYMXkyTAVn'), protocol)
 //   const listenerMa = multiaddr(`/ip4/127.0.0.1/tcp/10333/p2p/${idListener.toB58String()}`)
 //   const { stream } = await nodeDialer.dialProtocol(listenerMa, '/chat/1.0.0')
 
