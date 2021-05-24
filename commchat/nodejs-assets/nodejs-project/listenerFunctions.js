@@ -1,12 +1,13 @@
 const { handleChat } = require('./handleChat')
 const { dial } = require('./dialerFunctions')
-const pipe = require('it-pipe')
 
 async function listen(node) {
+  var count = 0
   // Log a message when a remote peer connects to us
   node.connectionManager.on('peer:connect', (connection) => {
-    handleChat(node)
-    // dial(node, '/chat/laptop') //make it bidirectional
+    // handleChat(node) // read stream
+    console.log(count)
+    count = count + 1
     console.log('connected to: ', connection.remotePeer.toB58String())
   })
 
@@ -14,6 +15,7 @@ async function listen(node) {
     console.log('disconnected peer')
   })
 
+  handleChat(node)
 
   // Output listen addresses to the console
   console.log('Listener ready, listening on:')
