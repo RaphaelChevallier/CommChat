@@ -1,18 +1,18 @@
+const blacklist = require('metro-config/src/defaults/blacklist');
+
 /**
  * Metro configuration for React Native
  * https://github.com/facebook/react-native
  *
  * @format
  */
-const blacklist = require('metro-config/src/defaults/blacklist');
-
 
 module.exports = {
-  resolver: {
+  resolver:{
     blacklistRE: blacklist([
-      /\/nodejs-assets\/.*/,
-      /\/android\/.*/,
-      /\/ios\/.*/
+      /nodejs-assets\/.*/,
+      /android\/.*/,
+      /ios\/.*/
     ])
   },
   transformer: {
