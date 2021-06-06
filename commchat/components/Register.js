@@ -1,16 +1,6 @@
 import React, { Component } from "react";
-import {
-	StyleSheet,
-	Text,
-	TouchableOpacity,
-	ScrollView,
-	View,
-	Image
-} from "react-native";
-
+import {StyleSheet,Text,TouchableOpacity,ScrollView,View} from "react-native";
 import { TextInput } from 'react-native-paper';
-// import ImagePicker from 'react-native-image-crop-picker';
-
 export default class RegisterScreen extends Component {
 	constructor(props){
 		super(props);

@@ -1,15 +1,5 @@
 import React, { Component } from 'react';
-import {
-	StyleSheet,
-	View,
-	Text,
-	ScrollView,
-	TouchableOpacity,
-	SafeAreaView,
-	KeyboardAvoidingView,
-} from 'react-native';
-import SQLite from 'react-native-sqlite-storage';
-
+import {StyleSheet,View,Text,ScrollView,TouchableOpacity,SafeAreaView,KeyboardAvoidingView,} from 'react-native';
 import { TextInput } from 'react-native-paper';
 export default class LoginScreen extends Component {
 
