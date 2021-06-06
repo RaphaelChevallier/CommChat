@@ -1,91 +1,181 @@
-import React from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
-import { login } from '../store';
+import React, { Component } from 'react';
+import {
+	StyleSheet,
+	View,
+	Text,
+	ScrollView,
+	TouchableOpacity,
+	SafeAreaView,
+	KeyboardAvoidingView,
+} from 'react-native';
+import SQLite from 'react-native-sqlite-storage';
 
-export default class Login extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      name: '',
-      password: ''
-    };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+import { TextInput } from 'react-native-paper';
+export default class LoginScreen extends Component {
 
-  handleChange(type, value) {
-    this.setState({ [type]: value });
-  }
+	constructor(props) {
+		super(props);
+		this.emailRef = React.createRef();
+		this.passwordRef = React.createRef();
+		this.state = {
+			userEmail: '',
+			userPassword: '',
+			errorText: 'Error in Value',
+			actualEmail: '',
+			actualPassword: '',
+			navigation: this.props.navigation
+		}
+	}
 
-  handleSubmit() {
-    login(this.state, this.props.navigation);
-  }
+	componentDidMount = async() => {
+		// await AsyncStorage.getItem('userEmail')
+		// 	.then((value) => this.setState({ actualEmail: value }));
+		// await AsyncStorage.getItem('userPassword')
+		// 	.then((value) => this.setState({ actualPassword: value }));
 
-  render() {
-    return (
-      <View style={ styles.container }>
-        <Text style={ styles.text }>Enter your name and password:</Text>
-        <TextInput
-          onChangeText={ value => this.handleChange('name', value) }
-          returnKeyType='next'
-          autoCorrect={ false }
-          onSubmitEditing={ () => this.passwordInput.focus() }
-          style={ styles.input }
-        />
-        <TextInput
-          onChangeText={ value => this.handleChange('password', value)}
-          secureTextEntry
-          returnKeyType='go'
-          autoCapitalize='none'
-          style={ styles.input }
-          ref={ input => this.passwordInput = input }
-        />
-        <TouchableOpacity
-          onPress={ this.handleSubmit }
-          style={ styles.button }
-        >
-          <Text style={ styles.buttonText }>Login</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
-}
+		// alert(this.state.actualEmail + ", " + this.state.actualPassword)
+	}
 
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'powderblue',
-    height: '100%',
-    width: '100%'
-  },
-  text: {
-    fontSize: 20,
-    fontWeight: 'bold'
-  },
-  input: {
-    height: 40,
-    width: '90%',
-    borderWidth: 0.5,
-    borderColor: 'black',
-    backgroundColor: '#fff',
-    color: '#000',
-    textAlign: 'center',
-    marginTop: 10
-  },
-  button: {
-    width: '75%',
-    backgroundColor: 'blue',
-    borderRadius: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 20,
-    paddingVertical: 15
-  },
-  buttonText: {
-    color: '#fff',
-    textAlign: 'center',
-    fontSize: 15,
-    fontWeight: 'bold',
-  }
-});
+	dataValidation = () => {
+		let passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+		let emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+		if (emailRegex.test(this.state.userEmail)) {
+			if (passwordRegex.test(this.state.userPassword)) {
+				AsyncStorage.setItem('isAuth', 'true')
+
+				if (this.state.actualEmail === this.state.userEmail && this.state.actualPassword === this.state.userPassword ) {
+					return this.state.navigation.replace('MaterialBottomNavigation');
+				} else {
+					this.setState({ userEmail: '', userPassword: '', errorText: 'User not Registered' });
+					return alert(this.state.errorText);
+				}
+			} else {
+				this.setState({ userEmail: '', userPassword: '', errorText: 'Password is incorrect' });
+				return alert(this.state.errorText);
+			}
+		} else {
+			this.setState({ userEmail: '', userPassword: '', errorText: 'Email is incorrect' });
+			return alert(this.state.errorText);
+		}
+
+ 	}
+	
+	render(){
+		return (
+			<SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }} >
+				<KeyboardAvoidingView style={{ flex: 1 }} >
+					<View style={{ flex: 1, justifyContent: 'center' }} >
+	
+						<View style={styles.headingStyles} >
+							<Text style={styles.title} >Welcome Back!</Text>
+							<Text style={styles.subTitle} >Enter your credentials to continue</Text>
+						</View>
+						
+						{/* Login Part */}
+						<View style={{ flex: 3 }} >
+							<ScrollView style={{ marginHorizontal: 20 }} showsVerticalScrollIndicator={false} >
+								
+								{/* Email Address */}
+								<View>
+									<TextInput
+										mode="flat"
+										label="Email"
+										ref={this.emailRef}
+										value={this.state.userEmail}
+										style={styles.inputStyles}
+										onChangeText={(userEmail) => this.setState({ userEmail })}
+										placeholder="Enter Email" 
+										keyboardType="email-address"
+										returnKeyType="next"
+										onSubmitEditing={() => this.passwordRef.current.focus()}
+										blurOnSubmit={false}
+									/>
+								</View> 
+								
+								{/* Password */}
+								<View>
+									<TextInput
+										mode="flat"
+										label="Password"
+										ref={this.passwordRef}
+										value={this.state.userPassword}
+										style={styles.inputStyles}
+										onChangeText={ (userPassword) => this.setState({ userPassword })}
+										secureTextEntry={true}
+										placeholder="Enter Password"
+										returnKeyType="done"
+									/>
+								</View>
+								
+								{/* Login Button */}
+								<TouchableOpacity
+									style={styles.buttonStyle}
+									activeOpacity={0.5}
+									onPress={this.dataValidation}>
+									<Text>
+										Login
+									</Text>
+								</TouchableOpacity>
+
+							</ScrollView>
+						</View>
+	
+						{/* Register Part */}
+						<View style={{ marginHorizontal: 10 }} >
+							<TouchableOpacity
+								style={styles.registerButtonStyle}
+								activeOpacity={0.5}
+								onPress={() => {
+									this.setState({ userEmail: '', userPassword: '', errorText: '' });
+									this.state.navigation.navigate('Register');
+								}}
+							>
+								<Text style={{ textAlign: 'center', fontWeight: 'bold' }} >
+									Register Now To Join The Community!
+								</Text>
+							</TouchableOpacity>
+						</View>
+					
+					</View>
+				</KeyboardAvoidingView>
+
+			</SafeAreaView>
+		
+		);
+	}
+};
+
+	const styles = StyleSheet.create({
+	headingStyles: {
+		flex: 2, 
+		justifyContent: 'center',
+		marginLeft: 30,	
+	},
+	title: {
+		fontSize: 25,
+		fontWeight: 'bold',
+		marginVertical: 10
+	},
+	subTitle: {
+		fontSize: 17,
+		color: 'grey'
+	},
+	inputStyles: {
+		marginVertical: 10,
+		backgroundColor: '#38c9cd'
+	},
+	buttonStyle: {
+		marginVertical: 20,
+		padding: 20,
+		backgroundColor: 'lightcyan',
+		borderRadius: 30
+	},
+	registerButtonStyle: {
+		backgroundColor: '#fff',
+		borderWidth: 2,
+		borderRadius: 30,
+		borderColor: '#babcbe',
+		paddingVertical: 15
+	}
+	});
