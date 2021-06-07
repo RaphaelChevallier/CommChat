@@ -114,12 +114,13 @@ export default class RegisterScreen extends Component {
 					</View>
 
 					{/* touchId */}
-					<View style={styles.details}>
+					<View style={styles.viewBiometrics}>
+						<Text >Enable Biometrics?</Text>
 						<Switch
 							value={isSwitchOn} 
 							onValueChange={() =>
 								{ this.setState({ isSwitchOn: !isSwitchOn }); }}
-							style={styles.inputStyles}
+							// style={styles.inputStyles}
 						/>
 					</View>
 
@@ -196,6 +197,11 @@ const styles = StyleSheet.create({
 	},
 	details: {
 		padding: 10, 
+	},
+	viewBiometrics: {
+		justifyContent: 'center', 
+		alignItems: 'center', 
+		marginTop: 20 
 	},
 	inputStyles: {
 		height: 40
