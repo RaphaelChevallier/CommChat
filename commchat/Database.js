@@ -24,11 +24,11 @@ export default class Database {
               )
                 .then(DB => {
                   db = DB;
-                    console.log("Initializing new database");
+                    console.log("Initializing database");
                     db.transaction((tx) => {
-                        tx.executeSql('CREATE TABLE IF NOT EXISTS User (userId, name, userName, userPassword)');
-                        tx.executeSql('CREATE TABLE IF NOT EXISTS Messages (messageId, messageFrom, messageTo, messageTime, messageContent)');
-                        tx.executeSql('CREATE TABLE IF NOT EXISTS Friends (friendId, friendName, friendUserName, friendPeerId)');
+                        tx.executeSql('CREATE TABLE IF NOT EXISTS User (name, userName, biometry, peerId, multiAddrs)');
+                        tx.executeSql('CREATE TABLE IF NOT EXISTS Messages (messageFrom, messageTo, messageTime, messageContent)');
+                        tx.executeSql('CREATE TABLE IF NOT EXISTS Friends (friendName, friendUserName, friendPeerId)');
                     }).then(() => {
                         console.log("Tables created successfully");
                     }).catch(error => {
@@ -61,5 +61,155 @@ export default class Database {
         }
       };
 
+      addUser(name, userName, biometry) {
+        return new Promise((resolve) => {
+          this.initDB().then((db) => {
+            db.transaction((tx) => {
+              tx.executeSql('INSERT INTO User VALUES (?, ?, ?, ?, ?)', [name, userName, biometry, null, null]).then(([tx, results]) => {
+                resolve(results);
+              });
+            }).then((result) => {
+              this.closeDatabase(db);
+            }).catch((err) => {
+              console.log(err);
+            });
+          }).catch((err) => {
+            console.log(err);
+          });
+        });  
+      }
+
+      deleteUser() {
+        return new Promise((resolve) => {
+          this.initDB().then((db) => {
+            db.transaction((tx) => {
+              tx.executeSql('DELETE FROM User').then(([tx, results]) => {
+                console.log(results);
+                resolve(results);
+              });
+            }).then((result) => {
+              this.closeDatabase(db);
+            }).catch((err) => {
+              console.log(err);
+            });
+          }).catch((err) => {
+            console.log(err);
+          });
+        });  
+      }
+
+      getUser() {
+        return new Promise((resolve) => {
+          const users = [];
+          this.initDB().then((db) => {
+            db.transaction((tx) => {
+              tx.executeSql('SELECT * FROM User', []).then(([tx,results]) => {
+                console.log("Query completed");
+                var len = results.rows.length;
+                for (let i = 0; i < len; i++) {
+                  let row = results.rows.item(i);
+                  console.log(`name: ${row.name}, UserName: ${row.userName}`)
+                  const { name, userName, password } = row;
+                  users.push({
+                    name,
+                    userName,
+                    password
+                  });
+                }
+                console.log(users);
+                resolve(users);
+              });
+            }).then((result) => {
+              this.closeDatabase(db);
+            }).catch((err) => {
+              console.log(err);
+            });
+          }).catch((err) => {
+            console.log(err);
+          });
+        });
+      }
+
+      saveMessage(message) {
+        return new Promise((resolve) => {
+          this.initDB().then((db) => {
+            db.transaction((tx) => {
+              tx.executeSql('INSERT INTO Messages VALUES (?, ?, ?, ?)', [message.messageFrom, message.messageTo, message.messageTime, message.messageContent]).then(([tx, results]) => {
+                resolve(results);
+              });
+            }).then((result) => {
+              this.closeDatabase(db);
+            }).catch((err) => {
+              console.log(err);
+            });
+          }).catch((err) => {
+            console.log(err);
+          });
+        });  
+      }
+
+      getMessages(messageFrom, messageTo) {
+        console.log(id);
+        return new Promise((resolve) => {
+          this.initDB().then((db) => {
+            db.transaction((tx) => {
+              tx.executeSql('SELECT * FROM Messages WHERE messageFrom = ? AND messageTo = ?', [messageFrom, messageTo]).then(([tx,results]) => {
+                console.log(results);
+                if(results.rows.length > 0) {
+                  let row = results.rows.item(0);
+                  resolve(row);
+                }
+              });
+            }).then((result) => {
+              this.closeDatabase(db);
+            }).catch((err) => {
+              console.log(err);
+            });
+          }).catch((err) => {
+            console.log(err);
+          });
+        });  
+      }
+
+      addFriend(friend) {
+        return new Promise((resolve) => {
+          this.initDB().then((db) => {
+            db.transaction((tx) => {
+              tx.executeSql('INSERT INTO Friends VALUES (?, ?, ?)', [friend.friendName, friend.friendUserName, friend.friendPeerId]).then(([tx, results]) => {
+                resolve(results);
+              });
+            }).then((result) => {
+              this.closeDatabase(db);
+            }).catch((err) => {
+              console.log(err);
+            });
+          }).catch((err) => {
+            console.log(err);
+          });
+        });  
+      }
+
+      getFriends() {
+        console.log(id);
+        return new Promise((resolve) => {
+          this.initDB().then((db) => {
+            db.transaction((tx) => {
+              tx.executeSql('SELECT * FROM Friends').then(([tx,results]) => {
+                console.log(results);
+                if(results.rows.length > 0) {
+                  let row = results.rows.item(0);
+                  resolve(row);
+                }
+              });
+            }).then((result) => {
+              this.closeDatabase(db);
+            }).catch((err) => {
+              console.log(err);
+            });
+          }).catch((err) => {
+            console.log(err);
+          });
+        });  
+      }
 
 }

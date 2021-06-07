@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import {StyleSheet,View,Text,ScrollView,TouchableOpacity,SafeAreaView,KeyboardAvoidingView,} from 'react-native';
 import { TextInput } from 'react-native-paper';
+import Database from '../Database';
+
+const db = new Database();
 export default class LoginScreen extends Component {
 
 	constructor(props) {
@@ -8,10 +11,8 @@ export default class LoginScreen extends Component {
 		this.emailRef = React.createRef();
 		this.passwordRef = React.createRef();
 		this.state = {
-			userEmail: '',
 			userPassword: '',
 			errorText: 'Error in Value',
-			actualEmail: '',
 			actualPassword: '',
 			navigation: this.props.navigation
 		}
@@ -27,27 +28,32 @@ export default class LoginScreen extends Component {
 	}
 
 	dataValidation = () => {
-		let passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
-		let emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    let users = [];
+    db.getUser().then((data) => {
+      users = data;
+      return alert(users)
+    })
+		// let passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+		// let emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
-		if (emailRegex.test(this.state.userEmail)) {
-			if (passwordRegex.test(this.state.userPassword)) {
-				AsyncStorage.setItem('isAuth', 'true')
+		// if (emailRegex.test(this.state.userEmail)) {
+		// 	if (passwordRegex.test(this.state.userPassword)) {
+		// 		AsyncStorage.setItem('isAuth', 'true')
 
-				if (this.state.actualEmail === this.state.userEmail && this.state.actualPassword === this.state.userPassword ) {
-					return this.state.navigation.replace('MaterialBottomNavigation');
-				} else {
-					this.setState({ userEmail: '', userPassword: '', errorText: 'User not Registered' });
-					return alert(this.state.errorText);
-				}
-			} else {
-				this.setState({ userEmail: '', userPassword: '', errorText: 'Password is incorrect' });
-				return alert(this.state.errorText);
-			}
-		} else {
-			this.setState({ userEmail: '', userPassword: '', errorText: 'Email is incorrect' });
-			return alert(this.state.errorText);
-		}
+		// 		if (this.state.actualEmail === this.state.userEmail && this.state.actualPassword === this.state.userPassword ) {
+		// 			return this.state.navigation.replace('MaterialBottomNavigation');
+		// 		} else {
+		// 			this.setState({ userEmail: '', userPassword: '', errorText: 'User not Registered' });
+		// 			return alert(this.state.errorText);
+		// 		}
+		// 	} else {
+		// 		this.setState({ userEmail: '', userPassword: '', errorText: 'Password is incorrect' });
+		// 		return alert(this.state.errorText);
+		// 	}
+		// } else {
+		// 	this.setState({ userEmail: '', userPassword: '', errorText: 'Email is incorrect' });
+		// 	return alert(this.state.errorText);
+		// }
 
  	}
 	

@@ -9,6 +9,8 @@ target 'commchat' do
   use_react_native!(:path => config["reactNativePath"])
 
 
+  pod 'TouchID', :path => '../node_modules/react-native-touch-id'
+
   target 'commchatTests' do
     inherit! :complete
     # Pods for testing
