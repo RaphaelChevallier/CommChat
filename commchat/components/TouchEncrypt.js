@@ -17,6 +17,30 @@ export default class FingerPrint extends Component {
     };
   }
 
+  bioSupported() {
+    TouchID.isSupported()
+      .then(biometryType => {
+        // Success code
+        if (biometryType === 'FaceID') {
+          console.log('FaceID is supported.');
+          return biometryType
+        } else if (biometryType === 'TouchID'){
+          console.log('TouchID is supported.');
+          return biometryType
+        } else if (biometryType === true) {
+      	  // Touch ID is supported on Android
+          return biometryType
+	      } else {
+          return false;
+        }
+      })
+      .catch(error => {
+        // Failure code if the user's device does not have touchID or faceID enabled
+        console.log(error);
+        return false;
+      });
+    }
+
   componentDidMount() {
     TouchID.isSupported()
     .then(biometryType => {
@@ -81,23 +105,3 @@ function authenticate() {
       AlertIOS.alert(error.message);
     });
 }
-
-function bioSupported() {
-    TouchID.isSupported()
-      .then(biometryType => {
-        // Success code
-        return biometryType;
-    //     if (biometryType === 'FaceID') {
-    //       console.log('FaceID is supported.');
-    //     } else if (biometryType === 'TouchID'){
-    //       console.log('TouchID is supported.');
-    //     } else if (biometryType === true) {
-    //   	  // Touch ID is supported on Android
-	// }
-      })
-      .catch(error => {
-        // Failure code if the user's device does not have touchID or faceID enabled
-        console.log(error);
-        return false;
-      });
-    }

@@ -5,7 +5,7 @@ import Database from '../Database';
 import TouchEncrypt from './TouchEncrypt';
 
 const db = new Database();
-
+const biometry = new TouchEncrypt();
 export default class RegisterScreen extends Component {
 	constructor(props){
 		super(props);
@@ -30,7 +30,7 @@ export default class RegisterScreen extends Component {
 		
 		if (usernameRegex.test(username)){
 					db.getUser().then((data) => {
-						if(data.length < 4){
+						if(data.length < 1){
 							db.addUser(this.state.name, this.state.username, this.state.isSwitchOn).then(() => {
 								// this.setState({
 								//   isLoading: true,
@@ -41,7 +41,7 @@ export default class RegisterScreen extends Component {
 								console.log("Something went wrong with the db register")
 							  })
 						} else {
-							return Alert.alert('4 Users already created!',  'You can only have 4 at a time on device. Delete a user and create new', [
+							return Alert.alert('User already created!',  'You can only have 1 at a time on device. Delete the user and create new?', [
 								{text: 'Ok', onPress: () => console.log('Pressed Ok')},
 							  ],
 							  { cancelable: true })
@@ -54,7 +54,8 @@ export default class RegisterScreen extends Component {
 	}
 
 	render() {
-		const { isSwitchOn } = this.state;
+		// const { isSwitchOn } = this.state;
+		// console.log(biometry.bioSupported())
 		return (
 			<View style={{ flex: 1, backgroundColor: 'cyan' }} >
 				<ScrollView style={{ margin: 15, borderRadius: 30, backgroundColor: '#fff' }} showsVerticalScrollIndicator={false} >
@@ -95,16 +96,16 @@ export default class RegisterScreen extends Component {
 						/>
 					</View>
 
-					{/* touchId */}
-					<View style={styles.viewBiometrics}>
-						<Text >Enable Biometrics?</Text>
-						<Switch
-							value={isSwitchOn} 
-							onValueChange={() =>
-								{ this.setState({ isSwitchOn: !isSwitchOn }); }}
-							// style={styles.inputStyles}
-						/>
-					</View>
+					{/* touchId
+					{biometry.bioSupported() != false? <View style={styles.viewBiometrics}>
+							<Text >Enable Biometrics?</Text>
+							<Switch
+								value={isSwitchOn} 
+								onValueChange={() =>
+									{ this.setState({ isSwitchOn: !isSwitchOn }); }}
+								// style={styles.inputStyles}
+							/>
+						</View>: null } */}
 
 					<View style={{ marginHorizontal: 30, marginTop: 20 }} >
 						<TouchableOpacity  onPress={() => {this.createUser(); this.state.navigation.navigate('Login')}} style={{ paddingVertical: 15, backgroundColor: '#000', paddingHorizontal: 20, borderRadius: 20 }} >
