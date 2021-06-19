@@ -11,17 +11,11 @@ export default class RegisterScreen extends Component {
 		super(props);
 		this.nameRef = React.createRef();
 		this.usernameRef = React.createRef();
-		// this.passwordRef = React.createRef();
-		// this.confirmPasswordRef = React.createRef();
         this.state = {
 			name: '',
 			username: '',
 			isSwitchOn: false,
-			// password: '',
-			// confirmPassword: '',
 			error: '',
-			// passwordError: false,
-			// confirmPasswordError: false,
 			usernameError: false,
 			navigation: this.props.navigation
 		}
@@ -35,13 +29,9 @@ export default class RegisterScreen extends Component {
 		let usernameRegex = /^\w[\w.]{2,18}\w$/;
 		
 		if (usernameRegex.test(username)){
-			// if (passwordRegex.test(password)) {
-			// 	this.setState({ passwordError: true })
-			// 	if (password === confirmPassword) {
-			// 		this.setState({ passwordError: false, confirmPasswordError: false })
 					db.getUser().then((data) => {
 						if(data.length < 4){
-							db.addUser(this.state.name, this.state.username, encryptedPassword).then(() => {
+							db.addUser(this.state.name, this.state.username, this.state.isSwitchOn).then(() => {
 								// this.setState({
 								//   isLoading: true,
 								//   isAuthenticated:true
@@ -57,14 +47,6 @@ export default class RegisterScreen extends Component {
 							  { cancelable: true })
 						}
 					})
-			// 	} else {
-			// 		this.setState({ password: '', confirmPassword: '', passwordError: true, confirmPasswordError: true })
-			// 		return alert('Passwords not Matching');
-			// 	}
-			// } else {
-			// 	this.setState({ password: '', confirmPassword: '', passwordError: true, confirmPasswordError: true })
-			// 	return alert('Password Not Following Requirements');
-			// }
 		} else {
 			this.setState({username: '', usernameError: true})
 			return alert('Username needs to be 4-20 characters. Cannot end with special characters. No spaces');
@@ -124,46 +106,8 @@ export default class RegisterScreen extends Component {
 						/>
 					</View>
 
-
-
-					{/* Password */}
-					{/* <View style={styles.details}>
-						<TextInput
-							mode="outlined"
-							label="Password"
-							placeholder="Password"
-							returnKeyType="next"
-							blurOnSubmit={false}
-							error={this.state.passwordError}
-							ref={this.passwordRef}
-							value={this.state.password}
-							secureTextEntry={true}
-							onChangeText={ (password) => this.setState({ password })} 
-							onSubmitEditing={() => this.confirmPasswordRef.current.focus()}
-							style={styles.inputStyles}
-						/>
-					</View> */}
-
-					{/* Confirm Password */}
-					{/* <View style={styles.details}>
-						<TextInput
-							mode="outlined"
-							label="Confirm Password"
-							placeholder="Confirm Password"
-							returnKeyType="next"
-							blurOnSubmit={false}
-							error={this.state.confirmPasswordError}
-							ref={this.confirmPasswordRef}
-							value={this.state.confirmPassword}
-							secureTextEntry={true}
-							onChangeText={ (confirmPassword) => this.setState({ confirmPassword })} 
-							onSubmitEditing={() => this.mobileRef.current.focus()}
-							style={styles.inputStyles}
-						/>
-					</View> */}
-
 					<View style={{ marginHorizontal: 30, marginTop: 20 }} >
-						<TouchableOpacity  onPress={() => this.createUser()} style={{ paddingVertical: 15, backgroundColor: '#000', paddingHorizontal: 20, borderRadius: 20 }} >
+						<TouchableOpacity  onPress={() => {this.createUser(); this.state.navigation.navigate('Login')}} style={{ paddingVertical: 15, backgroundColor: '#000', paddingHorizontal: 20, borderRadius: 20 }} >
 							<Text style={{ textAlign: 'center', color: '#fff' }} >
 								Submit
 							</Text>

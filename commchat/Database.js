@@ -109,11 +109,11 @@ export default class Database {
                 for (let i = 0; i < len; i++) {
                   let row = results.rows.item(i);
                   console.log(`name: ${row.name}, UserName: ${row.userName}`)
-                  const { name, userName, password } = row;
+                  const { name, userName, biometry } = row;
                   users.push({
                     name,
                     userName,
-                    password
+                    biometry
                   });
                 }
                 console.log(users);
@@ -210,6 +210,16 @@ export default class Database {
             console.log(err);
           });
         });  
+      }
+
+      deleteDatabase() {
+        SQLite.deleteDatabase(
+          {name: 'CommChat.db', location: '~www/test.db'},  
+          () => { console.log('second db deleted');  },
+          error => {
+              console.log("ERROR: " + error); 
+          }
+      );
       }
 
 }
